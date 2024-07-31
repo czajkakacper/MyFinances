@@ -27,9 +27,9 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`user` (
   `mail` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_user`),
-  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC) VISIBLE,
-  UNIQUE INDEX `id_user_UNIQUE` (`id_user` ASC) VISIBLE)
-ENGINE = InnoDB;
+  UNIQUE INDEX `mail_UNIQUE` (`mail` ASC),
+  UNIQUE INDEX `id_user_UNIQUE` (`id_user` ASC)
+);
 
 
 -- -----------------------------------------------------
@@ -42,14 +42,15 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`wallet` (
   `currency` VARCHAR(45) NOT NULL,
   `user_id_user` INT NOT NULL,
   PRIMARY KEY (`id_wallet`, `user_id_user`),
-  UNIQUE INDEX `id_wallet_UNIQUE` (`id_wallet` ASC) VISIBLE,
-  INDEX `fk_wallet_user1_idx` (`user_id_user` ASC) VISIBLE,
+  UNIQUE INDEX `id_wallet_UNIQUE` (`id_wallet` ASC),
+  INDEX `fk_wallet_user1_idx` (`user_id_user` ASC),
   CONSTRAINT `fk_wallet_user1`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `myfinances`.`user` (`id_user`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
+
 
 
 -- -----------------------------------------------------
@@ -60,8 +61,8 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`category` (
   `name` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_category`),
-  UNIQUE INDEX `id_category_UNIQUE` (`id_category` ASC) VISIBLE)
-ENGINE = InnoDB;
+  UNIQUE INDEX `id_category_UNIQUE` (`id_category` ASC)
+);
 
 
 -- -----------------------------------------------------
@@ -77,9 +78,9 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`transaction` (
   `wallet_id_wallet` INT NOT NULL,
   `wallet_user_id_user` INT NOT NULL,
   PRIMARY KEY (`id_transaction`, `category_id_category`, `wallet_id_wallet`, `wallet_user_id_user`),
-  UNIQUE INDEX `id_transaction_UNIQUE` (`id_transaction` ASC) VISIBLE,
-  INDEX `fk_transaction_category_idx` (`category_id_category` ASC) VISIBLE,
-  INDEX `fk_transaction_wallet1_idx` (`wallet_id_wallet` ASC, `wallet_user_id_user` ASC) VISIBLE,
+  UNIQUE INDEX `id_transaction_UNIQUE` (`id_transaction` ASC),
+  INDEX `fk_transaction_category_idx` (`category_id_category` ASC),
+  INDEX `fk_transaction_wallet1_idx` (`wallet_id_wallet` ASC, `wallet_user_id_user` ASC),
   CONSTRAINT `fk_transaction_category`
     FOREIGN KEY (`category_id_category`)
     REFERENCES `myfinances`.`category` (`id_category`)
@@ -89,8 +90,8 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`transaction` (
     FOREIGN KEY (`wallet_id_wallet` , `wallet_user_id_user`)
     REFERENCES `myfinances`.`wallet` (`id_wallet` , `user_id_user`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
 
 
 -- -----------------------------------------------------
@@ -106,9 +107,9 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`statistics` (
   `wallet_id_wallet` INT NOT NULL,
   `wallet_user_id_user` INT NOT NULL,
   PRIMARY KEY (`id_statistics`, `user_id_user`, `wallet_id_wallet`, `wallet_user_id_user`),
-  UNIQUE INDEX `idstatistics_UNIQUE` (`id_statistics` ASC) VISIBLE,
-  INDEX `fk_statistics_user1_idx` (`user_id_user` ASC) VISIBLE,
-  INDEX `fk_statistics_wallet1_idx` (`wallet_id_wallet` ASC, `wallet_user_id_user` ASC) VISIBLE,
+  UNIQUE INDEX `idstatistics_UNIQUE` (`id_statistics` ASC),
+  INDEX `fk_statistics_user1_idx` (`user_id_user` ASC),
+  INDEX `fk_statistics_wallet1_idx` (`wallet_id_wallet` ASC, `wallet_user_id_user` ASC),
   CONSTRAINT `fk_statistics_user1`
     FOREIGN KEY (`user_id_user`)
     REFERENCES `myfinances`.`user` (`id_user`)
@@ -118,8 +119,9 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`statistics` (
     FOREIGN KEY (`wallet_id_wallet` , `wallet_user_id_user`)
     REFERENCES `myfinances`.`wallet` (`id_wallet` , `user_id_user`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+    ON UPDATE NO ACTION
+);
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
