@@ -1,24 +1,16 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
+// import { Container, Nav, Navbar } from 'react-bootstrap';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Login from './components/Login';
 // import Signup from './components/Signup';
-// import Main from './components/Main';
+ import Main from './components/Main/App.js';
 
 function App() {
     return (
-        <div className="App">
-            <>
-                <Navbar bg="dark" data-bs-theme="dark">
-                    <Container>
-                        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                        <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#features">Features</Nav.Link>
-                            <Nav.Link href="#pricing">Pricing</Nav.Link>
-                        </Nav>
-                    </Container>
-                </Navbar>
-            </>
-        </div>
+        <Routes>
+            <Route path="/main" element={<Main />} />
+            <Route path='/' element={<Navigate replace to="/Main/App.js" />} />
+        </Routes>
     );
 }
 
