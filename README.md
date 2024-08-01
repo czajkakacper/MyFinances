@@ -8,7 +8,7 @@
 This project is being developed to provide a web application to help monitor user revenues, expenses, and savings.
 
 # Technologies
-[![My Skills](https://skillicons.dev/icons?i=html,css,bootstrap,js,ts,react)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=html,css,bootstrap,js,nodejs,react)](https://skillicons.dev)
 
 # Functional Requirements
 * Registration and login
