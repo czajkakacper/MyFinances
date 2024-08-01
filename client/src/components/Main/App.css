@@ -6,3 +6,8 @@
     min-height: 100vh; /* Ustawia minimalną wysokość na 100% wysokości widoku przeglądarki */
     overflow: hidden;
 }
+
+.modal-title-center {
+    text-align: center;
+    width: 100%;
+}
