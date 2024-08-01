@@ -3,13 +3,13 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 // import Login from './components/Login';
 // import Signup from './components/Signup';
- import Main from './components/Main/App.js';
+ import Main from './components/Main/App';
 
 function App() {
     return (
         <Routes>
+            <Route path='/' element={<Navigate replace to="/main" />} />
             <Route path="/main" element={<Main />} />
-            <Route path='/' element={<Navigate replace to="/Main/App.js" />} />
         </Routes>
     );
 }
