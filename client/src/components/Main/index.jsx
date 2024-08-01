@@ -125,15 +125,6 @@ const Main = () => {
                   </Form.Group>
                 </>
               )}
-              <Form.Group controlId="formBasicFirstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control type="text" name="firstName" placeholder="Jan" onChange={handleChange} value={formData.firstName} />
-              </Form.Group>
-
-              <Form.Group controlId="formBasicLastName" className="mt-3">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control type="text" name="lastName" placeholder="Kowalski" onChange={handleChange} value={formData.lastName} />
-              </Form.Group>
 
               <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label>Email address</Form.Label>
