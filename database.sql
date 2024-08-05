@@ -21,7 +21,7 @@ USE `myfinances` ;
 -- Table `myfinances`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfinances`.`user` (
-  `id_user` INT NOT NULL,
+  `id_user` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
   `mail` VARCHAR(45) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`user` (
 -- Table `myfinances`.`wallet`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfinances`.`wallet` (
-  `id_wallet` INT NOT NULL,
+  `id_wallet` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `balance` FLOAT NOT NULL,
   `currency` VARCHAR(45) NOT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`wallet` (
 -- Table `myfinances`.`category`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfinances`.`category` (
-  `id_category` INT NOT NULL,
+  `id_category` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `type` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_category`),
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`category` (
 -- Table `myfinances`.`transaction`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfinances`.`transaction` (
-  `id_transaction` INT NOT NULL,
+  `id_transaction` INT NOT NULL AUTO_INCREMENT,
   `amount` FLOAT NOT NULL,
   `type` VARCHAR(45) NOT NULL,
   `date` DATETIME NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`transaction` (
 -- Table `myfinances`.`statistics`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `myfinances`.`statistics` (
-  `id_statistics` INT NOT NULL,
+  `id_statistics` INT NOT NULL AUTO_INCREMENT,
   `time_period` DATETIME NOT NULL,
   `total_income` FLOAT NOT NULL,
   `total_expense` FLOAT NOT NULL,

@@ -3,10 +3,11 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
-const { userSchema, passwordComplexityInstance } = require("../utils/validation");
+const { userSchema, passwordComplexityInstance } = require("./validation");
 
 const saltRounds = 10;
 
+// Rejestracja
 router.post("/register", async (req, res) => {
     try {
       const { error } = userSchema.validate(req.body);
@@ -64,6 +65,39 @@ router.post("/register", async (req, res) => {
     }
 });
 
+// Logowanie
+router.post("/login", (req, res) => {
+  const sql = "SELECT * FROM user WHERE mail = ?";
+  db.query(sql, [req.body.email], (err, data) => {
+    if (err) {
+      console.error("Błąd podczas logowania:", err);
+      return res.status(500).json({ Error: "Login error in server" });
+    }
+    
+    if (data.length > 0) {
+      // Załóżmy, że kolumna z hasłem nazywa się `password`
+      bcrypt.compare(req.body.password, data[0].password, (err, result) => {
+        if (err) {
+          console.error("Błąd podczas porównywania haseł:", err);
+          return res.status(500).json({ Error: "Login error in server" });
+        }
+        
+        if (result) {
+          const mail = data[0].mail;
+          const token = jwt.sign({ mail }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
+          res.cookie("token", token);
+          return res.status(200).json({ Status: "Success" });
+        } else {
+          return res.status(401).json({ Error: "InvalidPassword" });
+        }
+      });
+    } else {
+      return res.status(404).json({ Error: "No email existed" });
+    }
+  });
+});
+
+// Wylogowanie
 router.get("/logout", (req, res) => {
     res.clearCookie("token");
     return res.json({ Status: "Success" });
