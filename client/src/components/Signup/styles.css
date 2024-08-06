@@ -1,0 +1,13 @@
+.App{
+    background-image: url('../Images/MainScreen.jpg');
+    background-size: 80%; /* Dopasowuje obrazek do rozmiaru elementu */
+    background-repeat: no-repeat; /* Zapobiega powtarzaniu obrazka */
+    background-position: center center; /* Wyśrodkowuje obrazek */
+    min-height: 100vh; /* Ustawia minimalną wysokość na 100% wysokości widoku przeglądarki */
+    overflow: hidden;
+}
+
+.modal-title-center {
+    text-align: center;
+    width: 100%;
+}
