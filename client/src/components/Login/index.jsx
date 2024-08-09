@@ -16,7 +16,7 @@ import "../../index.js";
 
 const Login = () => {
   const [show, setShow] = useState(true);
-  const [formData, setFormData] = useState({
+  const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
@@ -28,7 +28,7 @@ const Login = () => {
   const handleShow = () => setShow(true);
 
   const handleChange = ({ currentTarget: input }) => {
-    setFormData({ ...formData, [input.name]: input.value });
+    setLoginData({ ...loginData, [input.name]: input.value });
   };
 
   return (
@@ -37,8 +37,19 @@ const Login = () => {
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
           <Container>
             <h3>
-              <i>My Finances</i>
+              <Nav.Link href="/main">
+                <i>My Finances</i>
+              </Nav.Link>
             </h3>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto"></Nav>
+              <Link to="/signup">
+                <Button variant="outline-success" size="lg">
+                  ZAREJESTRUJ SIĘ
+                </Button>
+              </Link>
+            </Navbar.Collapse>
           </Container>
         </Navbar>
 
@@ -57,7 +68,7 @@ const Login = () => {
                   name="email"
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
-                  value={formData.email}
+                  value={loginData.email}
                 />
               </Form.Group>
 
@@ -68,7 +79,7 @@ const Login = () => {
                   name="password"
                   placeholder="********"
                   onChange={handleChange}
-                  value={formData.password}
+                  value={loginData.password}
                 />
               </Form.Group>
 
@@ -81,7 +92,7 @@ const Login = () => {
 
             <div className="text-center">
               <p>Nie masz konta?</p>
-              <Link to="/register">
+              <Link to="/signup">
                 <Button variant="outline-primary" className="w-100">
                   REJESTRACJA
                 </Button>

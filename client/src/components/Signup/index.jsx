@@ -16,7 +16,7 @@ import "../../index.js";
 
 const Signup = () => {
   const [show, setShow] = useState(true);
-  const [formData, setFormData] = useState({
+  const [signupData, setSignupData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -25,12 +25,12 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
   const navigate = useNavigate();
-  
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const handleChange = ({ currentTarget: input }) => {
-    setFormData({ ...formData, [input.name]: input.value });
+    setSignupData({ ...signupData, [input.name]: input.value });
   };
 
   return (
@@ -39,7 +39,9 @@ const Signup = () => {
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
           <Container>
             <h3>
-              <i>My Finances</i>
+              <Nav.Link href="/main">
+                <i>My Finances</i>
+              </Nav.Link>
             </h3>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
@@ -66,7 +68,7 @@ const Signup = () => {
                   name="firstName"
                   placeholder="Jan"
                   onChange={handleChange}
-                  value={formData.firstName}
+                  value={signupData.firstName}
                 />
               </Form.Group>
 
@@ -77,7 +79,7 @@ const Signup = () => {
                   name="lastName"
                   placeholder="Kowalski"
                   onChange={handleChange}
-                  value={formData.lastName}
+                  value={signupData.lastName}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicEmail" className="mt-3">
@@ -87,7 +89,7 @@ const Signup = () => {
                   name="email"
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
-                  value={formData.email}
+                  value={signupData.email}
                 />
               </Form.Group>
 
@@ -98,7 +100,7 @@ const Signup = () => {
                   name="password"
                   placeholder="********"
                   onChange={handleChange}
-                  value={formData.password}
+                  value={signupData.password}
                 />
               </Form.Group>
 
@@ -111,7 +113,7 @@ const Signup = () => {
 
             <div className="text-center">
               <p>Masz już konto?</p>
-              <Link to="/register">
+              <Link to="/login">
                 <Button variant="outline-primary" className="w-100">
                   ZALOGUJ
                 </Button>
