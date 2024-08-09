@@ -97,6 +97,25 @@ router.post("/login", (req, res) => {
   });
 });
 
+// Weryfikowanie użytkownika
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.json({ Error: "You are not authenticated" });
+  } else {
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+      if (err) {
+        return res.json({ Error: "Token is not ok" });
+      } else {
+        req.mail = decoded.mail;
+      }
+    });
+  }
+};
+
+router.get("/main", verifyUser, (req, res) => {
+});
+
 // Wylogowanie
 router.get("/logout", (req, res) => {
     res.clearCookie("token");

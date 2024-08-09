@@ -16,7 +16,7 @@ import "../../index.js";
 
 const Signup = () => {
   const [show, setShow] = useState(true);
-  const [signupData, setSignupData] = useState({
+  const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -26,11 +26,35 @@ const Signup = () => {
   const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
   const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    navigate("/main");
+  };
   const handleShow = () => setShow(true);
 
   const handleChange = ({ currentTarget: input }) => {
-    setSignupData({ ...signupData, [input.name]: input.value });
+    setData({ ...data, [input.name]: input.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/register",
+        data
+      );
+      if (response.data.error) {
+        setError(response.data.error);
+      } else if (response.data.Status === "Success") {
+        navigate("/login");
+      } else {
+        console.error("Błąd rejestracji: Niepoprawna odpowiedź z serwera");
+      }
+
+      console.log(response.data);
+    } catch (error) {
+      console.error("Błąd podczas rejestracji: " + error.message);
+    }
   };
 
   return (
@@ -60,7 +84,7 @@ const Signup = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
@@ -68,7 +92,7 @@ const Signup = () => {
                   name="firstName"
                   placeholder="Jan"
                   onChange={handleChange}
-                  value={signupData.firstName}
+                  value={data.firstName}
                 />
               </Form.Group>
 
@@ -79,7 +103,7 @@ const Signup = () => {
                   name="lastName"
                   placeholder="Kowalski"
                   onChange={handleChange}
-                  value={signupData.lastName}
+                  value={data.lastName}
                 />
               </Form.Group>
               <Form.Group controlId="formBasicEmail" className="mt-3">
@@ -89,7 +113,7 @@ const Signup = () => {
                   name="email"
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
-                  value={signupData.email}
+                  value={data.email}
                 />
               </Form.Group>
 
@@ -100,16 +124,17 @@ const Signup = () => {
                   name="password"
                   placeholder="********"
                   onChange={handleChange}
-                  value={signupData.password}
+                  value={data.password}
                 />
               </Form.Group>
+
+              <div className="horizontal-divider my-4"></div>
+              {error && <div className="alert alert-danger">{error}</div>}
 
               <Button variant="primary" type="submit" className="mt-3 w-100">
                 REJESTRACJA
               </Button>
             </Form>
-
-            <div className="horizontal-divider my-4"></div>
 
             <div className="text-center">
               <p>Masz już konto?</p>

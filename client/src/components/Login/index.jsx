@@ -16,7 +16,7 @@ import "../../index.js";
 
 const Login = () => {
   const [show, setShow] = useState(true);
-  const [loginData, setLoginData] = useState({
+  const [data, setData] = useState({
     email: "",
     password: "",
   });
@@ -24,12 +24,32 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
   const navigate = useNavigate();
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    navigate("/main");
+  };
 
   const handleChange = ({ currentTarget: input }) => {
-    setLoginData({ ...loginData, [input.name]: input.value });
+    setData({ ...data, [input.name]: input.value });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+        const response = await axios.post("http://localhost:3001/api/auth/login", data); // /api/auth
+        console.log(data);
+        if (response.loginData.Status === "Success") {
+            navigate('/main');
+        } else if (response.data.Error === "InvalidPassword") { // Obsłuż komunikat o niepoprawnym haśle
+            setError("Niewłaściwe hasło, spróbuj ponownie");
+        } else {
+            setError("Niewłaściwe dane logowania, spróbuj ponownie");
+        }
+        console.log(response.data);
+    } catch (error) {
+        console.error('Błąd podczas logowania: ' + error.message);
+    }
+};
 
   return (
     <div className="App">
@@ -60,7 +80,7 @@ const Login = () => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form>
+            <Form onSubmit={handleSubmit}>
               <Form.Group controlId="formBasicEmail" className="mt-3">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
@@ -68,7 +88,7 @@ const Login = () => {
                   name="email"
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
-                  value={loginData.email}
+                  value={data.email}
                 />
               </Form.Group>
 
@@ -79,16 +99,17 @@ const Login = () => {
                   name="password"
                   placeholder="********"
                   onChange={handleChange}
-                  value={loginData.password}
+                  value={data.password}
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit" className="mt-3 w-100">
+            <div className="horizontal-divider my-4"></div>
+            {error && <div className="alert alert-danger">{error}</div>}
+
+            <Button variant="primary" type="submit" className="mt-3 w-100">
                 ZALOGUJ
               </Button>
             </Form>
-
-            <div className="horizontal-divider my-4"></div>
 
             <div className="text-center">
               <p>Nie masz konta?</p>
