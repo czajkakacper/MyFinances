@@ -7,7 +7,6 @@ const authRoutes = require("./routes/auth");
 
 const port = process.env.PORT || 3001;
 
-app.use(cookieParser());
 app.use(express.json());
 
 app.use(
@@ -18,6 +17,7 @@ app.use(
   })
 );
 
+app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 
 app.listen(port, () => {

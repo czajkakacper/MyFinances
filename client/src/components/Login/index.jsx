@@ -37,20 +37,22 @@ const Login = () => {
     e.preventDefault();
 
     try {
-        const response = await axios.post("http://localhost:3001/api/auth/login", data); // /api/auth
-        if (response.data.Status === "Success") {
-            navigate('/main');
-        } else if (response.data.Error === "InvalidPassword") { // Obsłuż komunikat o niepoprawnym haśle
-            setError("Niewłaściwe hasło, spróbuj ponownie");
-        } else {
-            setError("Niewłaściwe dane logowania, spróbuj ponownie");
-        }
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/login",
+        data
+      );
+      console.log("Data:", data);
+      if (response.data.Status === "Success") {
+        navigate("/main");
+      } else {
+        setError("Niewłaściwe dane logowania, spróbuj ponownie");
+      }
 
-        console.log(response.data);
+      console.log(response.data);
     } catch (error) {
-        console.error('Błąd podczas logowania: ' + error.message);
+      console.error("Błąd podczas logowania: " + error.message);
     }
-};
+  };
 
   return (
     <div className="App">

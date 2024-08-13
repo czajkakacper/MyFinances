@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const express = require('express');
 require('dotenv').config()
 
 const db = mysql.createConnection({

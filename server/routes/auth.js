@@ -42,7 +42,7 @@ router.post("/register", async (req, res) => {
               console.error("Błąd podczas haszowania hasła:", err);
               return res.json({ Error: "Error for hashing password" });
             }
-            console.log("Hasło po hashowaniu:", hash);  // haslo po hashowaniu
+            //console.log("Hasło po hashowaniu:", hash);  // haslo po hashowaniu
             const values = [
               req.body.firstName,
               req.body.lastName,
@@ -70,9 +70,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", (req, res) => {
   const sql = "SELECT * FROM user WHERE mail = ?";
   db.query(sql, [req.body.email], (err, data) => {
+    const haslo = data[0].password;
+    console.log("Hasełko:", haslo);
     if (err) return res.json({ Error: "Login error in server" });
     if (data.length > 0) {
       bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
+        const haslo1 = data[0].password;
+        console.log("Hasełko:", haslo1);
           if (err) {
               console.error("Błąd podczas porównywania haseł:", err);
               return res.status(500).json({ Error: "Login error in server" });
