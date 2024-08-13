@@ -42,6 +42,7 @@ router.post("/register", async (req, res) => {
               console.error("Błąd podczas haszowania hasła:", err);
               return res.json({ Error: "Error for hashing password" });
             }
+            console.log("Hasło po hashowaniu:", hash);  // haslo po hashowaniu
             const values = [
               req.body.firstName,
               req.body.lastName,
@@ -69,33 +70,28 @@ router.post("/register", async (req, res) => {
 router.post("/login", (req, res) => {
   const sql = "SELECT * FROM user WHERE mail = ?";
   db.query(sql, [req.body.email], (err, data) => {
-    if (err) {
-      console.error("Błąd podczas logowania:", err);
-      return res.status(500).json({ Error: "Login error in server" });
-    }
-    
+    if (err) return res.json({ Error: "Login error in server" });
     if (data.length > 0) {
-      // Załóżmy, że kolumna z hasłem nazywa się `password`
-      bcrypt.compare(req.body.password, data[0].password, (err, result) => {
-        if (err) {
-          console.error("Błąd podczas porównywania haseł:", err);
-          return res.status(500).json({ Error: "Login error in server" });
-        }
-        
-        if (result) {
-          const mail = data[0].mail;
-          const token = jwt.sign({ mail }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
-          res.cookie("token", token);
-          return res.status(200).json({ Status: "Success" });
-        } else {
-          return res.status(401).json({ Error: "InvalidPassword" });
-        }
-      });
-    } else {
-      return res.status(404).json({ Error: "No email existed" });
-    }
+      bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
+          if (err) {
+              console.error("Błąd podczas porównywania haseł:", err);
+              return res.status(500).json({ Error: "Login error in server" });
+          }
+    
+          if (response) {
+            const mail = data[0].mail;
+            const token = jwt.sign({ mail }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" }); // jwt-secret-key -> .env -> 32/256 znakow
+            res.cookie("token", token);
+  
+          } else {
+            return res.json({ Error: "InvalidPassword" });
+          }
+        });
+      } else {
+        return res.json({ Error: "No email existed" });
+      }
+    });
   });
-});
 
 // Weryfikowanie użytkownika
 const verifyUser = (req, res, next) => {

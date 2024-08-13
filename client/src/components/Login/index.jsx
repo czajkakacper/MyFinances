@@ -23,6 +23,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
   const navigate = useNavigate();
+  axios.defaults.withCredentials = true;
 
   const handleClose = () => {
     navigate("/main");
@@ -37,14 +38,14 @@ const Login = () => {
 
     try {
         const response = await axios.post("http://localhost:3001/api/auth/login", data); // /api/auth
-        console.log(data);
-        if (response.loginData.Status === "Success") {
+        if (response.data.Status === "Success") {
             navigate('/main');
         } else if (response.data.Error === "InvalidPassword") { // Obsłuż komunikat o niepoprawnym haśle
             setError("Niewłaściwe hasło, spróbuj ponownie");
         } else {
             setError("Niewłaściwe dane logowania, spróbuj ponownie");
         }
+
         console.log(response.data);
     } catch (error) {
         console.error('Błąd podczas logowania: ' + error.message);
@@ -89,6 +90,7 @@ const Login = () => {
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
                   value={data.email}
+                  required
                 />
               </Form.Group>
 
@@ -100,13 +102,14 @@ const Login = () => {
                   placeholder="********"
                   onChange={handleChange}
                   value={data.password}
+                  required
                 />
               </Form.Group>
 
-            <div className="horizontal-divider my-4"></div>
-            {error && <div className="alert alert-danger">{error}</div>}
+              <div className="horizontal-divider my-4"></div>
+              {error && <div className="alert alert-danger">{error}</div>}
 
-            <Button variant="primary" type="submit" className="mt-3 w-100">
+              <Button variant="primary" type="submit" className="mt-3 w-100">
                 ZALOGUJ
               </Button>
             </Form>

@@ -93,6 +93,7 @@ const Signup = () => {
                   placeholder="Jan"
                   onChange={handleChange}
                   value={data.firstName}
+                  required
                 />
               </Form.Group>
 
@@ -104,6 +105,7 @@ const Signup = () => {
                   placeholder="Kowalski"
                   onChange={handleChange}
                   value={data.lastName}
+                  required
                 />
               </Form.Group>
               <Form.Group controlId="formBasicEmail" className="mt-3">
@@ -114,6 +116,7 @@ const Signup = () => {
                   placeholder="jankowalski@gmail.com"
                   onChange={handleChange}
                   value={data.email}
+                  required
                 />
               </Form.Group>
 
@@ -125,6 +128,7 @@ const Signup = () => {
                   placeholder="********"
                   onChange={handleChange}
                   value={data.password}
+                  required
                 />
               </Form.Group>
 
