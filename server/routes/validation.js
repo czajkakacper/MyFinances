@@ -32,8 +32,8 @@ const NAME_REGEX = new RegExp(
 );
 
 const userSchema   = Joi.object({
-    firstName: Joi.string().pattern(NAME_REGEX).min(3).max(25).required(),
-    lastName: Joi.string().pattern(NAME_REGEX).min(2).max(50).required(),
+    firstName: Joi.string().pattern(NAME_REGEX).min(3).max(25).required().label("FirstName"),
+    lastName: Joi.string().pattern(NAME_REGEX).min(2).max(50).required().label("LastName"),
     email: Joi.string().email().required().label("E-mail"),
     password: passwordComplexity().required().label("Password")
 }).messages(customMessages);

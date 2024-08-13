@@ -113,7 +113,7 @@ const verifyUser = (req, res, next) => {
   }
 };
 
-router.get("/main", verifyUser, (req, res) => {
+router.get("/main", (req, res) => {
 });
 
 // Wylogowanie
