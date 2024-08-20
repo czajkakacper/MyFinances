@@ -27,7 +27,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleClose = () => {
-    navigate("/main");
+    navigate("/#");
   };
   const handleShow = () => setShow(true);
 

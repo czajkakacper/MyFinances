@@ -19,33 +19,32 @@ const Login = () => {
   const [data, setData] = useState({
     email: "",
     password: "",
-  });
+  })
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
+  //const [successMessage, setSuccessMessage] = useState(""); // Stan dla wiadomości sukcesu
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
   const handleClose = () => {
-    navigate("/main");
+    navigate("/");
   };
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+    // console.log(data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        data
-      );
-      console.log("Data:", data);
-      if (response.data.Status === "Success") {
+      const response = await axios.post("http://localhost:3001/api/auth/login", data);
+      if (response.data.error) {
+        setError(response.data.error);
+      } else if (response.data.Status === "Success") {
         navigate("/main");
       } else {
-        setError("Niewłaściwe dane logowania, spróbuj ponownie");
+        console.error("Błąd logowania: Niepoprawna odpowiedź z serwera");
       }
 
       console.log(response.data);
