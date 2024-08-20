@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `myfinances`.`user` (
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
   `mail` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`id_user`),
   UNIQUE INDEX `mail_UNIQUE` (`mail` ASC),
   UNIQUE INDEX `id_user_UNIQUE` (`id_user` ASC)
