@@ -104,14 +104,24 @@ const verifyUser = (req, res, next) => {
         return res.json({ Error: "Token is not ok" });
       } else {
         req.mail = decoded.mail;
-        next(); // Przechodzimy dalej, jeśli token jest poprawny
+
+        // Pobieranie danych użytkownika z bazy danych
+        const sql = "SELECT name FROM user WHERE mail = ?";
+        db.query(sql, [req.mail], (err, result) => {
+          if (err || result.length === 0) {
+            return res.json({ Error: "User not found" });
+          } else {
+            req.name = result[0].name;
+            next();
+          }
+        });
       }
     });
   }
 };
 
 router.get("/main", verifyUser, (req, res) => {
-  return res.json({ Status: "Success", mail: req.mail});
+  return res.json({ Status: "Success", name: req.name, mail: req.mail});
 });
 
 // Wylogowanie
