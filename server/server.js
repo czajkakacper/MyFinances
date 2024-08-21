@@ -24,4 +24,4 @@ app.listen(port, () => {
     console.log(`Serwer działa na porcie ${port}`);
 });
 
-// npm install bcrypt dotenv express cors path cookie-parser mysql2 jsonwebtoken
+// npm install bcrypt dotenv express cors path cookie-parser mysql jsonwebtoken

@@ -135,7 +135,7 @@ const Signup = () => {
               <div className="horizontal-divider my-4"></div>
               {error && <div className="alert alert-danger">{error}</div>}
 
-              <Button variant="primary" type="submit" className="mt-3 w-100">
+              <Button variant="success" type="submit" className="mt-3 w-100">
                 REJESTRACJA
               </Button>
             </Form>
