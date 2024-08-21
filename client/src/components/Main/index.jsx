@@ -22,18 +22,17 @@ const Main = () => {
   //sprawdzamy autoryzacje
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/auth/main")
-      .then((res) => {
-        if (res.data.Status === "Success") {
-          setIsAuth(true);
-          setMail(res.data.mail);
-        } else {
-          setIsAuth(false);
-          setMessage(res.data.Error);
-        }
-      })
-      .catch((err) => console.log(err));
+      axios.get('http://localhost:3001/api/auth/main')
+          .then(res => {
+              if (res.data.Status === "Success") {
+                  setIsAuth(true);
+                  setMail(res.data.mail); //email
+              } else {
+                  setIsAuth(false);
+                  setMessage(res.data.Error);
+              }
+          })
+          .catch(err => console.log(err));
   }, []);
 
   const handleLogout = () => {
@@ -46,39 +45,9 @@ const Main = () => {
   };
 
   return (
-    //     <div className="App">
-    //       <>
-    //         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-    //           <Container>
-    //             <h3>
-    //               <Nav.Link href="#">
-    //                 <i>My Finances</i>
-    //               </Nav.Link>
-    //             </h3>
-    //             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-    //             <Navbar.Collapse id="responsive-navbar-nav">
-    //               <Nav className="me-auto"></Nav>
-    //               <Link to="/login">
-    //                 <Button variant="outline-success" size="lg">
-    //                   ZALOGUJ SIĘ
-    //                 </Button>
-    //               </Link>
-    //               <Link to="/signup">
-    //                 <Button variant="outline-success" size="lg">
-    //                   ZAREJESTRUJ SIĘ
-    //                 </Button>
-    //               </Link>
-    //             </Navbar.Collapse>
-    //           </Container>
-    //         </Navbar>
-    //       </>
-    //     </div>
-    //   );
-    // };
-
     <div className="App">
       <>
-        {isAuth ? (
+        {isAuth ? ( //zalogowany
           <>
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
               <Container>
@@ -98,6 +67,7 @@ const Main = () => {
             </Navbar>
           </>
         ) : (
+          // niezalogowany
           <>
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
               <Container>
@@ -124,6 +94,7 @@ const Main = () => {
             </Navbar>
           </>
         )}
+        ;
       </>
     </div>
   );
