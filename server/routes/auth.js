@@ -82,7 +82,7 @@ router.post("/login", (req, res) => {
             const mail = data[0].mail;
             const token = jwt.sign({ mail }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" }); // jwt-secret-key -> .env -> 32/256 znakow
             res.cookie("token", token);
-  
+            return res.json({ Status: "Success", token });
           } else {
             return res.json({ Error: "InvalidPassword" });
           }
@@ -104,13 +104,14 @@ const verifyUser = (req, res, next) => {
         return res.json({ Error: "Token is not ok" });
       } else {
         req.mail = decoded.mail;
+        next(); // Przechodzimy dalej, jeśli token jest poprawny
       }
     });
   }
 };
 
 router.get("/main", verifyUser, (req, res) => {
-
+  return res.json({ Status: "Success", mail: req.mail});
 });
 
 // Wylogowanie
