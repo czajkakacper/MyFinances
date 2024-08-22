@@ -124,6 +124,10 @@ router.get("/main", verifyUser, (req, res) => {
   return res.json({ Status: "Success", name: req.name, mail: req.mail});
 });
 
+router.get("/userprofile", verifyUser, (req, res) => {
+  return res.json({ Status: "Success", name: req.name, mail: req.mail});
+});
+
 // Wylogowanie
 router.get("/logout", (req, res) => {
     res.clearCookie("token");

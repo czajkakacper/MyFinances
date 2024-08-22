@@ -13,13 +13,18 @@ const UserProfile = () => {
     const [message, setMessage] = useState("");
     const [mail, setMail] = useState("");
     const [name, setName] = useState("");
-
+    const [data, setData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
 
     //sprawdzamy autoryzacje
     axios.defaults.withCredentials = true;
     useEffect(() => {
         axios
-            .get("http://localhost:3001/api/auth/main")
+            .get("http://localhost:3001/api/auth/userprofile")
             .then((res) => {
                 if (res.data.Status === "Success") {
                     setIsAuth(true);
@@ -33,6 +38,7 @@ const UserProfile = () => {
             .catch((err) => console.log(err));
     }, []);
 
+    // wylogowanie
     const handleLogout = () => {
         axios
             .get("http://localhost:3001/api/auth/logout")
@@ -42,9 +48,25 @@ const UserProfile = () => {
             .catch((err) => console.log(err));
     };
 
-    // const handleChange = ({ currentTarget: input }) => {
-    //     setData({ ...data, [input.name]: input.value });
-    // };
+    // pobranie danych użytkownika
+    useEffect(() => {
+        axios.get(`http://localhost:3001/api/user/getUserData?email=${mail}`)
+            .then(res => {
+                if (res.data && res.data.length > 0) {
+                    console.log(res.data[0])
+                    setData({
+                        firstName: res.data[0].name,
+                        lastName: res.data[0].surname,
+                        email: res.data[0].mail
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+    }, [mail]);
+
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+    };
 
     return (
         <>
@@ -57,7 +79,7 @@ const UserProfile = () => {
                         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary navbar-custom"> {/* Navbar na wierzchu */}
                             <Container>
                                 <h3>
-                                    <Nav.Link href="#">
+                                    <Nav.Link href="/main">
                                         <i>My Finances</i>
                                     </Nav.Link>
                                 </h3>
@@ -87,7 +109,8 @@ const UserProfile = () => {
                                     <Form.Control
                                         type="text"
                                         name="firstName"
-                                        placeholder="Jan"
+                                        value={data.firstName}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </Form.Group>
@@ -97,7 +120,8 @@ const UserProfile = () => {
                                     <Form.Control
                                         type="text"
                                         name="lastName"
-                                        placeholder="Kowalski"
+                                        value={data.lastName}
+                                        onChange={handleChange}
                                         required
                                     />
                                 </Form.Group>
@@ -106,18 +130,9 @@ const UserProfile = () => {
                                     <Form.Control
                                         type="email"
                                         name="email"
-                                        placeholder="jankowalski@gmail.com"
-                                        required
-                                    />
-                                </Form.Group>
-
-                                <Form.Group controlId="formBasicPassword" className="mt-3">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control
-                                        type="password"
-                                        name="password"
-                                        placeholder="********"
-                                        required
+                                        value={data.email}
+                                        onChange={handleChange}
+                                        disabled
                                     />
                                 </Form.Group>
 
