@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
         if (emailExists) {
           return res.json({ error: "Użytkownik o podanym adresie e-mail już istnieje." });
         } else {
-          const sql = "INSERT INTO user (`name`, `surname`, `mail`, `haslo`) VALUES (?, ?, ?, ?)";
+          const sql = "INSERT INTO user (`name`, `surname`, `mail`, `password`) VALUES (?, ?, ?, ?)";
   
           bcrypt.hash(req.body.password.toString(), saltRounds, (err, hash) => {
             if (err) {
@@ -72,7 +72,7 @@ router.post("/login", (req, res) => {
   db.query(sql, [req.body.email], (err, data) => {
     if (err) return res.json({ Error: "Login error in server" });
     if (data.length > 0) {
-      bcrypt.compare(req.body.password.toString(), data[0].haslo, (err, response) => {
+      bcrypt.compare(req.body.password.toString(), data[0].password, (err, response) => {
           if (err) {
               console.error("Błąd podczas porównywania haseł:", err);
               return res.status(500).json({ Error: "Login error in server" });

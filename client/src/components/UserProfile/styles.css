@@ -1,0 +1,52 @@
+/* Styl dla zalogowanego użytkownika */
+.AppAuthenticated {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Warstwa z rozmytym tłem */
+.background-blur {
+    background-image: url('../Images/LogoScreen.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    filter: blur(5px); /* Rozmycie tła */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Tło jest najniżej */
+}
+
+/* Warstwa nakładająca się na tło, aby bardziej wyeksponować formularz */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Półprzezroczysta nakładka */
+    z-index: 1; /* Nakładka nad tłem */
+}
+
+/* Stylizacja formularza */
+.container-form {
+    position: relative;
+    z-index: 2; /* Formularz nad nakładką */
+    background-color: rgba(255, 255, 255, 0.9); /* Jasne tło formularza, półprzezroczyste */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* Cień wokół formularza */
+    margin-top: 50px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Navbar na wierzchu */
+.navbar-custom {
+    position: relative;
+    z-index: 3; /* Navbar nad wszystkimi warstwami */
+}

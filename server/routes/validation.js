@@ -38,9 +38,17 @@ const userSchema   = Joi.object({
     password: passwordComplexity().required().label("Password")
 }).messages(customMessages);
 
+// const editUserSchema   = Joi.object({
+//     firstName: Joi.string().pattern(NAME_REGEX).min(3).max(25).required().label("FirstName"),
+//     lastName: Joi.string().pattern(NAME_REGEX).min(2).max(50).required().label("LastName"),
+//     email: Joi.string().email().required().label("E-mail"),
+//     password: passwordComplexity().required().label("Password")
+// }).message(customMessages);
+
 const passwordComplexityInstance = passwordComplexity(complexityOptions);
 
 module.exports = {
     userSchema,
+    //editUserSchema,
     passwordComplexityInstance
 };

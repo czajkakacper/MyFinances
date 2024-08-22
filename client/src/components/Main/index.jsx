@@ -6,7 +6,7 @@ import {
   Modal,
   Form,
   FormControl,
-  NavDropdown 
+  NavDropdown
 } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -51,10 +51,10 @@ const Main = () => {
   };
 
   return (
-    <div className="App">
-      <>
-        {isAuth ? ( //zalogowany
-          <>
+    <>
+      {isAuth ? ( //zalogowany
+        <>
+          <div className="AppAuthenticated">
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
               <Container>
                 <h3>
@@ -66,8 +66,8 @@ const Main = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                   <Nav className="me-auto"></Nav>
                   <NavDropdown title={<><FaUserLarge /> Witaj {name}</>} id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">
-                      Ustawienia
+                    <NavDropdown.Item href="/userprofile">
+                      Twój Profil
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
                     <NavDropdown.Item onClick={handleLogout}>
@@ -76,15 +76,14 @@ const Main = () => {
                       </Button>
                     </NavDropdown.Item>
                   </NavDropdown>
-                  {/* <Button variant="danger" onClick={handleLogout}>
-                    WYLOGUJ
-                  </Button> */}
                 </Navbar.Collapse>
               </Container>
             </Navbar>
-          </>
-        ) : (
-          // niezalogowany
+          </div>
+        </>
+      ) : (
+        // niezalogowany
+        <div className="AppUnauthenticated">
           <>
             <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
               <Container>
@@ -110,10 +109,10 @@ const Main = () => {
               </Container>
             </Navbar>
           </>
-        )}
-        ;
-      </>
-    </div>
+        </div>
+      )}
+      ;
+    </>
   );
 };
 
